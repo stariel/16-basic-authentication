@@ -6,6 +6,7 @@ import jwt from 'jsonwebtoken';
 
 const userSchema = new mongoose.Schema({
   username: {type: String, required: true, unique: true},
+  email: {type: String, required: true, unique: true},
   password: {type: String, required: true},
 });
 
@@ -40,7 +41,7 @@ userSchema.methods.comparePassword = function(password) {
 
 // Generate a JWT from the user id and a secret
 userSchema.methods.generateToken = function() {
-  return jwt.sign( {id:this._id}, process.env.SECRET || 'changeit' );
+  return jwt.sign( {id:this._id}, process.env.APP_SECRET || 'changeit' );
 };
 
 export default mongoose.model('users', userSchema);
